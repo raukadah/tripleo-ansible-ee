@@ -1,0 +1,27 @@
+version: 1
+
+build_arg_defaults:
+  EE_BASE_IMAGE: 'quay.io/ansible/ansible-runner:latest'
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+
+additional_build_steps:
+  prepend: |
+    COPY settings /runner/env/settings
+    COPY tripleo_entrypoint.sh /bin/tripleo_entrypoint
+    ADD tripleo-ansible /var/tmp/tripleo-ansible
+  append:
+    - USER root
+    - RUN cd /var/tmp/tripleo-ansible && python3 setup.py install --prefix=/usr
+    - RUN chmod 777 /runner/env/settings
+    - RUN sed -i '1d' /bin/entrypoint
+    - RUN cat /bin/entrypoint >> /bin/tripleo_entrypoint
+    - RUN chmod +x /bin/tripleo_entrypoint
+    - WORKDIR /runner
+    - RUN rm -rf /runner/roles && ln -snf /usr/share/ansible/roles roles
+    - RUN rm -rf /runner/project && ln -snf /usr/share/ansible/tripleo-playbooks project
+    - USER 1001
+    - ENTRYPOINT ["tripleo_entrypoint"]

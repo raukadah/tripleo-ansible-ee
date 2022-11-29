@@ -1,0 +1,7 @@
+settings
+requirements.yml
+requirements.txt
+tripleo-ansible/
+bindep.txt
+Containerfile
+tripleo_entrypoint.sh
