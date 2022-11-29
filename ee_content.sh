@@ -1,4 +1,4 @@
-sudo dnf -y install ansible-core
+sudo dnf -y install ansible-core podman
 pip install ansible-builder
 git clone https://opendev.org/openstack/tripleo-ansible
 cp tripleo-ansible/bindep.txt .
