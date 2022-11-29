@@ -2,13 +2,19 @@
 Execution Environment for opendev/tripleo-ansible
 
 ## Get required files for building tripleo-ansible-ee
+```
 sh ee_content.sh
+```
 
 ## Build tripleo-ansible-ee container
+```
 sh build_ee.sh
+```
 
 ## Built Image
+```
 podman pull quay.io/tripleoansible/tripleo-ansible-ee:stream8
+```
 
 ## Content of Built image
 ```
